@@ -33,17 +33,16 @@ end
 
 # Your code after this point
 
-def movies_with_director_key(name, movies_collection)
-index = 0
-array = []
-key = movie_with_director_name(name, movies_collection[index])
-
- while index<movies_collection.length do 
-   array.push(key)
-  index+=1
+def movies_with_director_key(name, movies)
+  index = 0
+  array = []
+  while index < movies.length do
+    array << movie_with_director_name(name, movies[index])
+    index += 1
+  end
+  array
 end
-return array
- end
+
 
   # GOAL: For each Hash in an Array (movies_collection), provide a collection
   # of movies and a directors name to the movie_with_director_name method
@@ -62,15 +61,23 @@ return array
 
 
 def gross_per_studio(collection)
-  hash = {}
-  array = 0 
-   while array < collection.length do
-   studio_name = collection[array][:studio]
-    if hash[studio_name]
-      hash[studio_name] += collection[array][:worldwide_gross]
+
+  movie_index = 0
+  studio_totals = {}
+  
+  
+  while movie_index < collection.length do
+    studio_name = collection[movie_index][:studio]
+    if studio_totals[studio_name]
+      studio_totals[studio_name] += collection[movie_index][:worldwide_gross]
+    else
+      studio_totals[studio_name] = collection[movie_index][:worldwide_gross]
+    end
+    movie_index += 1
   end
-  hash
-  end
+  
+  studio_totals
+  
 end
  
   
@@ -90,13 +97,13 @@ end
 
 
 def movies_with_directors_set(source)
-  director_index = 0
-  movie = []
-  while array < source.length do
-    movie.push( movies_with_director_key(source[array][:name], source[array][:movies]))
-    array += 1
+   director_index = 0
+  movie_array = []
+  while director_index < source.length do
+    movie_array << movies_with_director_key(source[director_index][:name], source[director_index][:movies])
+    director_index += 1
   end
-  movie
+  movie_array
 end
   # GOAL: For each director, find their:movies Array and stick it in a new Array
   #
